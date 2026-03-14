@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FunZone</title>
+
+<style>
+
+body{
+font-family:Arial, sans-serif;
+background:#f5f6fa;
+margin:0;
+}
+
+/* TOP BAR */
+.topbar{
+background:#2c3e50;
+color:#4aa3ff;
+padding:10px;
+text-align:center;
+font-size:20px;
+font-weight:bold;
+}
+
+/* HEADER */
+header{
+display:flex;
+justify-content:center;
+padding:15px;
+background:white;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.logo{
+height:90px;
+}
+
+/* BANNER */
+.banner{
+background:linear-gradient(90deg,#ff7eb3,#8e44ad);
+color:white;
+text-align:center;
+padding:25px;
+font-size:26px;
+font-weight:bold;
+}
+
+/* SECTION TITLE */
+.section-title{
+font-size:24px;
+margin:20px;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+padding:20px;
+}
+
+/* CARD */
+.card{
+background:white;
+border-radius:10px;
+padding:15px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+}
+
+.card img{
+width:100%;
+height:120px;
+object-fit:cover;
+border-radius:8px;
+}
+
+.tags{
+color:gray;
+font-size:14px;
+}
+
+.price{
+font-size:20px;
+font-weight:bold;
+margin-top:10px;
+}
+
+button{
+background:#ff2e63;
+border:none;
+color:white;
+padding:10px;
+width:100%;
+border-radius:6px;
+font-size:16px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#e91e63;
+}
+
+/* CART */
+.cart{
+position:fixed;
+bottom:20px;
+right:20px;
+background:#2c3e50;
+color:white;
+padding:15px;
+border-radius:10px;
+width:200px;
+}
+
+.checkout-btn{
+background:#27ae60;
+margin-top:10px;
+}
+
+/* CHECKOUT MODAL */
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+justify-content:center;
+align-items:center;
+}
+
+.modal-content{
+background:white;
+padding:30px;
+border-radius:10px;
+width:320px;
+text-align:center;
+}
+
+.payment{
+border:1px solid #ddd;
+padding:10px;
+border-radius:8px;
+margin-top:15px;
+cursor:pointer;
+}
+
+.payment img{
+height:40px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="topbar">www.FunZone.com</div>
+
+<header>
+<img src="funlogo.jpg" class="logo">
+</header>
+
+<div class="banner">
+FunZone – Awesome Apps to Check Out!
+</div>
+
+<div class="section-title">Available Apps:</div>
+
+<div class="grid">
+
+<div class="card">
+<img src="chatgpt.png">
+<h3>Word Puzzle</h3>
+<div class="tags">#Word #Puzzle</div>
+<div class="price">₱199</div>
+<button onclick="addCart(199)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="clash2.jpg">
+<h3>Castle Clash</h3>
+<div class="tags">#Strategy #Tower Defense</div>
+<div class="price">₱499</div>
+<button onclick="addCart(499)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="art3.jpg">
+<h3>Art of War</h3>
+<div class="tags">#RTS #Tactics</div>
+<div class="price">₱299</div>
+<button onclick="addCart(299)">Add to Cart</button>
+</div>
+
+<div class="card">
+<img src="merge4.png">
+<h3>Merge Restaurant</h3>
+<div class="tags">#Casual #Puzzle</div>
+<div class="price">₱599</div>
+<button onclick="addCart(599)">Add to Cart</button>
+</div>
+
+</div>
+
+<!-- CART -->
+<div class="cart">
+🛒 Cart: <span id="cartCount">0</span><br>
+Total: ₱<span id="totalPrice">0</span>
+
+<button class="checkout-btn" onclick="openCheckout()">Checkout</button>
+</div>
+
+<!-- CHECKOUT MODAL -->
+
+<div class="modal" id="checkoutModal">
+
+<div class="modal-content">
+
+<h2>Checkout</h2>
+
+<p>Total Payment</p>
+
+<h3>₱<span id="checkoutTotal">0</span></h3>
+
+<h4>Select Payment Method</h4>
+
+<div class="payment" onclick="payGCash()">
+<img src="data:image/webp;base64,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  ">
+<p>Pay with GCash</p>
+</div>
+
+<br>
+
+<button onclick="closeCheckout()">Cancel</button>
+
+</div>
+
+</div>
+
+<script>
+
+let cart = 0
+let total = 0
+
+function addCart(price){
+
+cart++
+total += price
+
+document.getElementById("cartCount").innerText = cart
+document.getElementById("totalPrice").innerText = total
+
+alert("Game added to cart!")
+
+}
+
+function openCheckout(){
+
+if(cart === 0){
+alert("Your cart is empty!")
+return
+}
+
+document.getElementById("checkoutTotal").innerText = total
+document.getElementById("checkoutModal").style.display="flex"
+
+}
+
+function closeCheckout(){
+document.getElementById("checkoutModal").style.display="none"
+}
+
+function payGCash(){
+
+alert("Redirecting to GCash Payment...")
+
+setTimeout(()=>{
+
+alert("Payment Successful! Thank you!")
+
+cart = 0
+total = 0
+
+document.getElementById("cartCount").innerText = 0
+document.getElementById("totalPrice").innerText = 0
+
+closeCheckout()
+
+},1500)
+
+}
+
+</script>
+
+</body>
+</html>
